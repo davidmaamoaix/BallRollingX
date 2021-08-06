@@ -15,7 +15,8 @@ Shader "Custom/GlitchBuildShader" {
     SubShader {
 
         Tags {
-            "RenderType"="Opaque"
+            "Queue" = "Transparent"
+            "RenderType" = "Transparent"
         }
 
         LOD 200
@@ -52,10 +53,8 @@ Shader "Custom/GlitchBuildShader" {
             float fluc = saturate(sin(_Time.z * _FlucSpeed) / 2 + 1);
 
             o.Albedo = c.rgb;
-            
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
-            o.Alpha = IN.uv_MainTex;
             o.Emission = emit * _BuildColor * pow(strength, 2) * fluc;
         }
 
