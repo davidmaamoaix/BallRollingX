@@ -6,6 +6,8 @@ Shader "Custom/GlitchBuildShader" {
         _Glossiness ("Smoothness", Range(0, 1)) = 0.5
         _Metallic ("Metallic", Range(0, 1)) = 0
         _Percentage ("Build Percentage", Range(0, 1)) = 1
+        _BuildTex ("Build Texture", 2D) = "white" {}
+        [HDR] _BuildColor ("BuildColor", Color) = (1, 1, 1, 1)
     }
 
     SubShader {
@@ -23,24 +25,29 @@ Shader "Custom/GlitchBuildShader" {
         
         struct Input {
             float2 uv_MainTex;
+            float2 uv_BuildTex;
         };
 
         sampler2D _MainTex;
+        sampler2D _BuildTex;
         half _Glossiness;
         half _Metallic;
-        fixed4 _Color;
+        float4 _Color;
+        float4 _BuildColor;
         float _Percentage;
 
         void surf(Input IN, inout SurfaceOutputStandard o) {
 
             clip(_Percentage - IN.uv_MainTex.x);
             
-            fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+            float4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+            float4 emit = tex2D(_BuildTex, IN.uv_BuildTex) * _Color;
             o.Albedo = c.rgb;
             
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
-            o.Alpha = c.a;
+            o.Alpha = IN.uv_MainTex;
+            //o.Emission = emit * _BuildColor;
         }
 
         ENDCG
