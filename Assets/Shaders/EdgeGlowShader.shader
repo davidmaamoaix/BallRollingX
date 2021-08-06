@@ -20,21 +20,22 @@ Shader "Custom/EdgeGlowShader" {
 
         struct Input {
             float2 uv_MainTex;
+            float3 viewDir;
+            float3 worldNormal;
         };
 
         fixed4 _Color;
         fixed4 _EdgeColor;
 
-        UNITY_INSTANCING_BUFFER_START(Props)
-            // put more per-instance properties here
-        UNITY_INSTANCING_BUFFER_END(Props)
-
         void surf(Input IN, inout SurfaceOutput o) {
-            
+            float power = saturate(dot(IN.worldNormal, normalize(IN.viewDir)));
+
             o.Albedo = _Color;
-            o.Emission = _EdgeColor;
+            o.Emission = _EdgeColor * pow(1 - power, 10);
         }
+
         ENDCG
     }
+
     FallBack "Diffuse"
 }
