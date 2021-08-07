@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 546208098}
   - component: {fileID: 546208097}
   m_Layer: 0
-  m_Name: Barrier Left (1)
+  m_Name: Barrier Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -428,6 +428,7 @@ MonoBehaviour:
   _groundEnd: 60
   _ground: {fileID: 1083520484}
   _rowMat: {fileID: 2100000, guid: 1c30b5927c4514f6391460ccb19eec32, type: 2}
+  _glitchMat: {fileID: 2100000, guid: 0c0f36b7459754db09d38dabaa6e51c4, type: 2}
 --- !u!143 &747097082
 CharacterController:
   m_ObjectHideFlags: 0
