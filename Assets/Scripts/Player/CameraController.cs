@@ -18,4 +18,8 @@ public class CameraController: MonoBehaviour {
         pos.z = _player.position.z + _diff;
         transform.position = pos;
     }
+
+    private void OnRenderImage(RenderTexture from, RenderTexture to) {
+        EffectController.Ins.ApplyEffects(from, to);
+    }
 }

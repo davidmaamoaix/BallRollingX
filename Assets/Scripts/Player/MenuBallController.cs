@@ -16,11 +16,15 @@ public class MenuBallController: MonoBehaviour {
     private float _groundEnd = 50;
     [SerializeField]
     private MeshRenderer _ground;
+    [SerializeField]
+    private Material _glitchMat;
 
     private float _maxDist = 0;
       
     void Start() {
-        
+        EffectController.Ins.AddEffect(
+            new GlitchImageEffect(transform, _glitchMat)
+        );
     }
 
     void Update() {
