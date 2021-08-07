@@ -25,6 +25,9 @@ public class MenuBallController: MonoBehaviour {
         EffectController.Ins.AddEffect(
             new GlitchImageEffect(transform, _glitchMat)
         );
+        EffectController.Ins.AddEffect(
+            new GlitchImageEffect(transform, _glitchMat)
+        );
     }
 
     void Update() {
