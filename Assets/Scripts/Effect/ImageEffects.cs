@@ -6,7 +6,7 @@ public class GlitchImageEffect: ImageEffect {
 
     private Transform _player;
 
-    public GlitchImageEffect(Transform player, Material mat): base(mat) {
+    public GlitchImageEffect(Transform player, Material mat) : base(mat) {
         _player = player;
     }
 

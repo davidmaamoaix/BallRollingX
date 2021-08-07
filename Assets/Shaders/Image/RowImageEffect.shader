@@ -1,7 +1,10 @@
-Shader "Custom/GlitchImageEffect" {
+Shader "Custom/RowImageEffect" {
 
     Properties {
         _MainTex ("Texture", 2D) = "white" {}
+        _RowSpeed ("Row Speed", Range(0, 10)) = 1
+        _RowSize ("Row Size", Range(0, 1)) = 0.7
+        _RowPow ("Row Power", Range(5, 20)) = 2
     }
 
     SubShader {
@@ -18,6 +21,9 @@ Shader "Custom/GlitchImageEffect" {
             #include "UnityCG.cginc"
 
             sampler2D _MainTex;
+            float _RowSpeed;
+            float _RowSize;
+            float _RowPow;
 
             struct appdata {
                 float4 vertex: POSITION;
@@ -37,9 +43,13 @@ Shader "Custom/GlitchImageEffect" {
             }
 
             fixed4 frag (v2f i): SV_Target {
-                fixed4 col = tex2D(_MainTex, i.uv);
+                float rowPos = 1 - frac(_Time[0] * _RowSpeed);
+                float noise = saturate(1 - abs(rowPos - i.uv.y) - _RowSize);
+                float offset = pow(noise * 2, _RowPow);
+
+                fixed4 col = tex2D(_MainTex, float2(i.uv.x + offset, i.uv.y));
                 
-                return 1 - col;
+                return col + (noise * float4(0.75, 0.75, 0.75, 1));
             }
 
             ENDCG

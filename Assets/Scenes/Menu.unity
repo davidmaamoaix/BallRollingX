@@ -427,7 +427,7 @@ MonoBehaviour:
   _buildOffset: 10
   _groundEnd: 60
   _ground: {fileID: 1083520484}
-  _glitchMat: {fileID: 2100000, guid: 1c30b5927c4514f6391460ccb19eec32, type: 2}
+  _rowMat: {fileID: 2100000, guid: 1c30b5927c4514f6391460ccb19eec32, type: 2}
 --- !u!143 &747097082
 CharacterController:
   m_ObjectHideFlags: 0

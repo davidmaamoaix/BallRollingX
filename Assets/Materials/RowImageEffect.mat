@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GlitchImageEffect
+  m_Name: RowImageEffect
   m_Shader: {fileID: 4800000, guid: f86a66f3de2a44fc4adf75837ec12d1e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -72,6 +72,9 @@ Material:
     - _NoiseBias: 0.65
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _RowPow: 10
+    - _RowSize: 0.7
+    - _RowSpeed: 2
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Speed: 0.85
