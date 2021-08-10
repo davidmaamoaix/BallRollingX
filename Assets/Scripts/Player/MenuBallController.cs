@@ -5,7 +5,9 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class MenuBallController: MonoBehaviour {
 
-    private const float MAX_BLOOM = 25;
+    private const float MAX_BLOOM = 40;
+    private const float SWITCH_DIST = 40;
+    private const float TRANSITION_BLOOM = 70;
 
     [SerializeField]
     private float _rotationSpeed = 0.25F;
@@ -31,11 +33,14 @@ public class MenuBallController: MonoBehaviour {
     private Bloom _bloom;
     private float _bloomIntensity;
     private float _maxDist = 0;
+    private Color _groundGlow;
       
     void Start() {
         PostProcessVolume volume = _camera.GetComponent<PostProcessVolume>();
         _bloom = volume.profile.GetSetting<Bloom>();
         _bloomIntensity = _bloom.intensity;
+
+        _groundGlow = _ground.material.GetColor("_BuildColor");
 
         EffectController.Ins.AddEffect(
             new ImageEffect(_glitchMat)
@@ -78,6 +83,24 @@ public class MenuBallController: MonoBehaviour {
     private void UpdateImageEffect() {
         float dist = transform.position.z - _rollRange.x;
         float scaled = dist / (_rollRange.y - _rollRange.x);
-        _bloom.intensity.value = Mathf.Lerp(_bloomIntensity, MAX_BLOOM, scaled);
+
+        Color glow = _groundGlow;
+        glow *= 1 - scaled;
+
+        _ground.material.SetColor("_BuildColor", glow);
+
+        if (transform.position.z < SWITCH_DIST) {
+            _bloom.intensity.value = Mathf.Lerp(
+                _bloomIntensity,
+                MAX_BLOOM,
+                scaled
+            );
+        } else {
+            if (_bloom.intensity.value > TRANSITION_BLOOM) {
+                Debug.Log("MOVE");
+            } else {
+                _bloom.intensity.value += Time.deltaTime * 30;
+            }
+        }
     }
 }

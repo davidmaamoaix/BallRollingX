@@ -430,7 +430,7 @@ MonoBehaviour:
   _rowMat: {fileID: 2100000, guid: 1c30b5927c4514f6391460ccb19eec32, type: 2}
   _glitchMat: {fileID: 2100000, guid: 0c0f36b7459754db09d38dabaa6e51c4, type: 2}
   _camera: {fileID: 963194225}
-  _rollRange: {x: 10, y: 45}
+  _rollRange: {x: 15, y: 40}
 --- !u!143 &747097082
 CharacterController:
   m_ObjectHideFlags: 0
