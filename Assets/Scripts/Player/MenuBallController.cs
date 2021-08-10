@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class MenuBallController: MonoBehaviour {
+
+    private const float MAX_BLOOM = 50;
 
     [SerializeField]
     private float _rotationSpeed = 0.25F;
@@ -20,10 +23,18 @@ public class MenuBallController: MonoBehaviour {
     private Material _rowMat;
     [SerializeField]
     private Material _glitchMat;
+    [SerializeField]
+    private GameObject _camera;
 
+    private Bloom _bloom;
+    private float _bloomIntensity;
     private float _maxDist = 0;
       
     void Start() {
+        PostProcessVolume volume = _camera.GetComponent<PostProcessVolume>();
+        _bloom = volume.profile.GetSetting<Bloom>();
+        _bloomIntensity = 5;
+
         EffectController.Ins.AddEffect(
             new ImageEffect(_glitchMat)
         );
