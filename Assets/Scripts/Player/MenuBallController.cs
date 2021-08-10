@@ -5,7 +5,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class MenuBallController: MonoBehaviour {
 
-    private const float MAX_BLOOM = 50;
+    private const float MAX_BLOOM = 25;
 
     [SerializeField]
     private float _rotationSpeed = 0.25F;
@@ -25,6 +25,8 @@ public class MenuBallController: MonoBehaviour {
     private Material _glitchMat;
     [SerializeField]
     private GameObject _camera;
+    [SerializeField]
+    private Vector2 _rollRange;
 
     private Bloom _bloom;
     private float _bloomIntensity;
@@ -33,7 +35,7 @@ public class MenuBallController: MonoBehaviour {
     void Start() {
         PostProcessVolume volume = _camera.GetComponent<PostProcessVolume>();
         _bloom = volume.profile.GetSetting<Bloom>();
-        _bloomIntensity = 5;
+        _bloomIntensity = _bloom.intensity;
 
         EffectController.Ins.AddEffect(
             new ImageEffect(_glitchMat)
@@ -47,6 +49,7 @@ public class MenuBallController: MonoBehaviour {
         UpdateMovement();
         UpdateRotation();
         UpdateGround();
+        UpdateImageEffect();
     }
 
     private void UpdateMovement() {
@@ -70,5 +73,11 @@ public class MenuBallController: MonoBehaviour {
 
     private void UpdateRotation() {
         transform.Rotate(Vector3.up, _rotationSpeed, Space.World);
+    }
+
+    private void UpdateImageEffect() {
+        float dist = transform.position.z - _rollRange.x;
+        float scaled = dist / (_rollRange.y - _rollRange.x);
+        _bloom.intensity.value = Mathf.Lerp(_bloomIntensity, MAX_BLOOM, scaled);
     }
 }
